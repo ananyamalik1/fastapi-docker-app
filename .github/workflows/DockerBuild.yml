@@ -1,23 +1,21 @@
-name: Build and Push Docker Image
+name: Docker Image Build and Push
 
-on:
-  push:
-    branches:
-      - main  # Triggers on pushes to the main branch
+on: push
 
 jobs:
-  build-and-push:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3  # Pull latest code
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Log in to Docker Hub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.ananya556 }}" --password-stdin
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKERTOKEN }}" | docker login -u "ananya556
 
-      - name: Build Docker Image
-        run: docker build -t ${{ secrets.ananya556 }}/fastapi-app:latest .
+" --password-stdin
 
-      - name: Push Docker Image to Docker Hub
-        run: docker push ${{ secrets.ananya556 }}/fastapi-app:latest
+      - name: Build and push Docker image
+        run: |
+          docker build -t your-dockerhub-username/fastapi-app:latest .
+          docker push your-dockerhub-username/fastapi-app:latest
